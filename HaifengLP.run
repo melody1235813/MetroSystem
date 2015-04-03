@@ -1,0 +1,21 @@
+option solver knitroampl;
+option presolve_eps 1.0e-5;
+option knitro_options "ms_enable=1 ms_maxsolves=5";
+#option ipopt_options 'max_cpu_time=120 max_iter=1000 tol=1e-6';
+
+model fullLP.mod;
+data fullLP.dat;
+solve;
+
+display cov >> defenderCov.txt;
+
+#for {t in (buffer + 1)..(buffer + nTime)} {
+#	printf "%d\n", t > defenderFlow.txt;
+#	for {i in 1..nTarget} {
+#	for {j in 1..nTarget} {
+#			printf "%f ", flow[(i-1)*nTarget+j, t] > defenderFlow.txt;
+#		}
+#		printf "\n" > defenderFlow.txt;
+#	}
+#	printf "\n" > defenderFlow.txt;
+#}
